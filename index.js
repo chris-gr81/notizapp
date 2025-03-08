@@ -3,7 +3,7 @@ const noteList = [
   {
     id: 1,
     title: "Summertime",
-    text: "Das ist, wenn die Sonne Scheint.Glaub mir, so ist das.",
+    text: "Das ist, wenn die Sonne Scheint. Bacardi in der Hand und ab dafür.",
     lastUpdated: 1741438060033,
   },
   {
@@ -35,25 +35,15 @@ function createSidebarNote(noteItem) {
   const timeEl = document.createElement("div");
   timeEl.classList.add("note-preview-timestamp");
   timeEl.appendChild(
-    document.createTextNode(formateTimestamp(noteItem.lastUpdated))
+    document.createTextNode(
+      new Date(noteItem.lastUpdated).toLocaleString("de-DE")
+    )
   );
-  timeEl.create;
 
   sidebarNoteEl.append(titleEl, textEl, timeEl);
-  sidebarNoteEl.setAttribute("id", noteItem.id);
+  sidebarNoteEl.setAttribute("data-id", noteItem.id);
 
   return sidebarNoteEl;
-}
-
-function formateTimestamp(lastUpdated) {
-  return new Date(lastUpdated).toLocaleString("de-DE", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
 }
 
 function renderSidebar() {
