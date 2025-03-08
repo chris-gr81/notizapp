@@ -1,3 +1,4 @@
+const sidebarListEl = document.querySelector(".sidebar-list");
 const noteList = [
   {
     id: 1,
@@ -18,8 +19,6 @@ const noteList = [
     lastUpdated: 1741438274150,
   },
 ];
-
-console.log(noteList[0]);
 
 function createSidebarNote(noteItem) {
   const sidebarNoteEl = document.createElement("div");
@@ -58,13 +57,12 @@ function formateTimestamp(lastUpdated) {
 }
 
 function renderSidebar() {
-  const sidebarList = document.getElementById("sidebar-list");
   const sortedNoteList = noteList.toSorted(
     (a, b) => Number(b.lastUpdated) - Number(a.lastUpdated)
   );
 
   sortedNoteList.forEach((e) => {
-    sidebarList.appendChild(createSidebarNote(e));
+    sidebarListEl.appendChild(createSidebarNote(e));
   });
 }
 
