@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles.css" />
+    <script src="index.js" defer></script>
     <title>NotizApp</title>
   </head>
   <body>
@@ -25,21 +26,7 @@
             ></path></svg
           ><span>Neue Notiz erstellen</span>
         </button>
-        <div class="sidebar-list">
-          <div class="note-preview selected-note">
-            <div class="note-preview-header">Wein</div>
-            <div class="note-preview-text">
-              Ernsthaft, das ist schon deutlich gediegener als Bier. Wir sind
-              Pfälzer, keine Primitivlinge.
-            </div>
-            <div class="note-preview-timestamp">6.3.2025, 20:48:34</div>
-          </div>
-          <div class="note-preview">
-            <div class="note-preview-header">Bier</div>
-            <div class="note-preview-text">Schmeckt halt aber auch, Diggi.</div>
-            <div class="note-preview-timestamp">6.3.2025, 20:42:12</div>
-          </div>
-        </div>
+        <div class="sidebar-list" id="sidebar-list"></div>
       </div>
       <div class="content-container">
         <div class="content-header">
