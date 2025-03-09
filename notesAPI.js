@@ -1,14 +1,25 @@
 const LOCAL_STORAGE_KEY = "noteList";
 let noteList = [];
 
-function saveNote(title, text) {
+function saveNote(title, text, id) {
   const notes = getNotes();
-  notes.push({
-    id: getNextId(),
-    title,
-    text,
-    lastUpdated: Date.now(),
-  });
+  if (id === null) {
+    notes.push({
+      id: getNextId(),
+      title,
+      text,
+      lastUpdated: Date.now(),
+    });
+  } else {
+    const selectedNote = notes.find((note) => {
+      return note.id == id;
+    });
+    selectedNote.id = Number(id);
+    selectedNote.title = title;
+    selectedNote.text = text;
+    selectedNote.lastUpdated = Date.now();
+  }
+  currentId = null; // globale Id wieder auf null
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(notes));
 }
 

@@ -2,6 +2,7 @@ const sidebarListEl = document.querySelector(".sidebar-list");
 const saveBtnEl = document.querySelector(".save-note");
 const titleInputEl = document.getElementById("title-input");
 const contentInputEl = document.getElementById("content-input");
+let currentId = null;
 
 saveBtnEl.addEventListener("click", () => {
   getUserInput();
@@ -32,6 +33,9 @@ function createSidebarNote(noteItem) {
 
   sidebarNoteEl.append(titleEl, textEl, timeEl);
   sidebarNoteEl.setAttribute("data-id", noteItem.id);
+  sidebarNoteEl.addEventListener("click", (e) => {
+    selectCardByClick(e);
+  });
 
   return sidebarNoteEl;
 }
@@ -48,6 +52,11 @@ function renderSidebar() {
   });
 }
 
+function renderContent(title, text) {
+  titleInputEl.value = title;
+  contentInputEl.value = text;
+}
+
 function initializeContent() {
   noteList = getNotes();
   renderSidebar();
@@ -56,15 +65,37 @@ function initializeContent() {
 function getUserInput() {
   const title = titleInputEl.value;
   const text = contentInputEl.value;
+  const id = currentId; // aus globaler Variable gezogen, null wenn nicht gesetzt
 
   if (title == "" || text == "") {
     alert("Bitte Titel und Inhalt eingeben.");
     return;
   }
-  saveNote(title, text);
+  saveNote(title, text, id);
 
   titleInputEl.value = "";
   contentInputEl.value = "";
 
   renderSidebar();
+}
+
+function selectCardByClick(e) {
+  const notes = getNotes();
+  if (e.currentTarget.classList.contains("selected-note")) {
+    return;
+  }
+
+  const notePreviewEls = document.querySelectorAll(".note-preview");
+  notePreviewEls.forEach((notePrev) => {
+    notePrev.classList.remove("selected-note");
+  });
+
+  e.currentTarget.classList.add("selected-note");
+  const inputId = e.currentTarget.dataset.id;
+  const selectedNote = notes.find((note) => {
+    return note.id == inputId;
+  });
+
+  currentId = inputId; // setzen offene ID global in den Speicher
+  renderContent(selectedNote.title, selectedNote.text);
 }
