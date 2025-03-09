@@ -1,4 +1,12 @@
 const sidebarListEl = document.querySelector(".sidebar-list");
+const saveBtnEl = document.querySelector(".save-note");
+
+saveBtnEl.addEventListener("click", () => {
+  saveNote();
+});
+document.addEventListener("DOMContentLoaded", () => {
+  initializeContent();
+});
 
 function createSidebarNote(noteItem) {
   const sidebarNoteEl = document.createElement("div");
@@ -27,6 +35,7 @@ function createSidebarNote(noteItem) {
 }
 
 function renderSidebar() {
+  sidebarListEl.innerHTML = "";
   const sortedNoteList = noteList.toSorted(
     (a, b) => Number(b.lastUpdated) - Number(a.lastUpdated)
   );
@@ -36,4 +45,7 @@ function renderSidebar() {
   });
 }
 
-renderSidebar();
+function initializeContent() {
+  noteList = loadList();
+  renderSidebar();
+}
