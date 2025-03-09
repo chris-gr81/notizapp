@@ -8,7 +8,7 @@ function saveNote() {
   } else {
     const id = noteList.length + 1;
     const time = Date.now();
-    noteList.push({ id: id, title, title, text: text, lastUpdated: time });
+    noteList.push({ id: id, title: title, text: text, lastUpdated: time });
 
     localStorage.setItem("noteList", JSON.stringify(noteList));
     renderSidebar();
