@@ -1,25 +1,32 @@
+const LOCAL_STORAGE_KEY = "noteList";
 let noteList = [];
 
-function saveNote() {
-  const title = document.getElementById("title-input").value;
-  const text = document.getElementById("content-input").value;
-  if (title == "" || text == "") {
-    alert("Bitte Titel und Inhalt eingeben.");
-  } else {
-    const id = noteList.length + 1;
-    const time = Date.now();
-    noteList.push({ id: id, title: title, text: text, lastUpdated: time });
-
-    localStorage.setItem("noteList", JSON.stringify(noteList));
-    renderSidebar();
-  }
+function saveNote(title, text) {
+  const notes = getNotes();
+  notes.push({
+    id: getNextId(),
+    title,
+    text,
+    lastUpdated: Date.now(),
+  });
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(notes));
 }
 
-function loadList() {
-  const loadedList = JSON.parse(localStorage.getItem("noteList"));
-  if (loadedList === null) {
-    return [];
-  } else {
-    return loadedList;
+function getNotes() {
+  return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
+}
+
+function getNextId() {
+  const notes = getNotes();
+  const sortedNotes = notes.sort((a, b) => Number(a.id) - Number(b.id));
+
+  let nextId = 1;
+
+  for (let note of sortedNotes) {
+    if (nextId < note.id) break;
+
+    nextId = note.id + 1;
   }
+
+  return nextId;
 }

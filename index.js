@@ -1,8 +1,10 @@
 const sidebarListEl = document.querySelector(".sidebar-list");
 const saveBtnEl = document.querySelector(".save-note");
+const titleInputEl = document.getElementById("title-input");
+const contentInputEl = document.getElementById("content-input");
 
 saveBtnEl.addEventListener("click", () => {
-  saveNote();
+  getUserInput();
 });
 document.addEventListener("DOMContentLoaded", () => {
   initializeContent();
@@ -35,8 +37,9 @@ function createSidebarNote(noteItem) {
 }
 
 function renderSidebar() {
+  const notes = getNotes();
   sidebarListEl.innerHTML = "";
-  const sortedNoteList = noteList.toSorted(
+  const sortedNoteList = notes.sort(
     (a, b) => Number(b.lastUpdated) - Number(a.lastUpdated)
   );
 
@@ -46,6 +49,22 @@ function renderSidebar() {
 }
 
 function initializeContent() {
-  noteList = loadList();
+  noteList = getNotes();
+  renderSidebar();
+}
+
+function getUserInput() {
+  const title = titleInputEl.value;
+  const text = contentInputEl.value;
+
+  if (title == "" || text == "") {
+    alert("Bitte Titel und Inhalt eingeben.");
+    return;
+  }
+  saveNote(title, text);
+
+  titleInputEl.value = "";
+  contentInputEl.value = "";
+
   renderSidebar();
 }
