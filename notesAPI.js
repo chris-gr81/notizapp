@@ -41,3 +41,7 @@ function getNextId() {
 
   return nextId;
 }
+
+function deleteNote() {
+  // TODO
+}
