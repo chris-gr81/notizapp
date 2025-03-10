@@ -3,7 +3,7 @@ let noteList = [];
 
 function saveNote(title, text, id) {
   const notes = getNotes();
-  if (id === null) {
+  if (id === 0) {
     notes.push({
       id: getNextId(),
       title,
@@ -19,7 +19,7 @@ function saveNote(title, text, id) {
     selectedNote.text = text;
     selectedNote.lastUpdated = Date.now();
   }
-  currentId = null; // globale Id wieder auf null
+
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(notes));
 }
 

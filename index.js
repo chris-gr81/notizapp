@@ -2,13 +2,17 @@ const sidebarListEl = document.querySelector(".sidebar-list");
 const saveBtnEl = document.querySelector(".save-note");
 const titleInputEl = document.getElementById("title-input");
 const contentInputEl = document.getElementById("content-input");
-let currentId = null;
+const createNewBtnEl = document.getElementById("btn-new-notice");
 
 saveBtnEl.addEventListener("click", () => {
   getUserInput();
 });
 document.addEventListener("DOMContentLoaded", () => {
   initializeContent();
+});
+
+createNewBtnEl.addEventListener("click", () => {
+  resetContent();
 });
 
 function createSidebarNote(noteItem) {
@@ -65,18 +69,23 @@ function initializeContent() {
 function getUserInput() {
   const title = titleInputEl.value;
   const text = contentInputEl.value;
-  const id = currentId; // aus globaler Variable gezogen, null wenn nicht gesetzt
+  const id = getCurrentId();
 
   if (title == "" || text == "") {
     alert("Bitte Titel und Inhalt eingeben.");
     return;
   }
-  saveNote(title, text, id);
+  saveNote(title, text, Number(id));
 
   titleInputEl.value = "";
   contentInputEl.value = "";
 
   renderSidebar();
+}
+
+function getCurrentId() {
+  const selectedNote = sidebarListEl.querySelector(".selected-note");
+  return selectedNote ? Number(selectedNote.getAttribute("data-id")) : null;
 }
 
 function selectCardByClick(e) {
@@ -96,6 +105,14 @@ function selectCardByClick(e) {
     return note.id == inputId;
   });
 
-  currentId = inputId; // setzen offene ID global in den Speicher
   renderContent(selectedNote.title, selectedNote.text);
+}
+
+function resetContent() {
+  const selectedNote = sidebarListEl.querySelector(".selected-note");
+  if (selectedNote) {
+    selectedNote.classList.remove("selected-note");
+  }
+  titleInputEl.value = "";
+  contentInputEl.value = "";
 }
