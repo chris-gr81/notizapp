@@ -1,5 +1,6 @@
 const sidebarListEl = document.querySelector(".sidebar-list");
 const saveBtnEl = document.querySelector(".save-note");
+const deleteBtnEl = document.querySelector(".delete-note");
 const titleInputEl = document.getElementById("title-input");
 const contentInputEl = document.getElementById("content-input");
 const createNewBtnEl = document.getElementById("btn-new-notice");
@@ -7,8 +8,12 @@ const createNewBtnEl = document.getElementById("btn-new-notice");
 saveBtnEl.addEventListener("click", () => {
   getUserInput();
 });
+
+deleteBtnEl.addEventListener("click", () => {
+  deleteCurrentNote();
+});
 document.addEventListener("DOMContentLoaded", () => {
-  initializeContent();
+  renderSidebar();
 });
 
 createNewBtnEl.addEventListener("click", () => {
@@ -61,11 +66,6 @@ function renderContent(title, text) {
   contentInputEl.value = text;
 }
 
-function initializeContent() {
-  noteList = getNotes();
-  renderSidebar();
-}
-
 function getUserInput() {
   const title = titleInputEl.value;
   const text = contentInputEl.value;
@@ -115,4 +115,11 @@ function resetContent() {
   }
   titleInputEl.value = "";
   contentInputEl.value = "";
+}
+
+function deleteCurrentNote() {
+  const currentId = getCurrentId();
+  resetContent();
+  deleteNote(currentId);
+  renderSidebar();
 }

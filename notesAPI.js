@@ -1,5 +1,4 @@
 const LOCAL_STORAGE_KEY = "noteList";
-let noteList = [];
 
 function saveNote(title, text, id) {
   const notes = getNotes();
@@ -42,6 +41,12 @@ function getNextId() {
   return nextId;
 }
 
-function deleteNote() {
-  // TODO
+function deleteNote(id) {
+  if (id) {
+    notes = getNotes();
+    notes = notes.filter((note) => {
+      return Number(note.id) !== Number(id);
+    });
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(notes));
+  }
 }
