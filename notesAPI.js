@@ -2,7 +2,7 @@ const LOCAL_STORAGE_KEY = "noteList";
 
 function saveNote(title, text, id) {
   const notes = getNotes();
-  if (id === 0) {
+  if (!id) {
     notes.push({
       id: getNextId(),
       title,
@@ -13,7 +13,8 @@ function saveNote(title, text, id) {
     const selectedNote = notes.find((note) => {
       return note.id == id;
     });
-    selectedNote.id = Number(id);
+    if (!selectedNote) return;
+    selectedNote.id = id;
     selectedNote.title = title;
     selectedNote.text = text;
     selectedNote.lastUpdated = Date.now();
@@ -42,11 +43,10 @@ function getNextId() {
 }
 
 function deleteNote(id) {
-  if (id) {
-    notes = getNotes();
-    notes = notes.filter((note) => {
-      return Number(note.id) !== Number(id);
-    });
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(notes));
-  }
+  if (!id) return;
+  const notes = getNotes();
+  const filteredNotes = notes.filter((note) => {
+    return Number(note.id) !== Number(id);
+  });
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(filteredNotes));
 }

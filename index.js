@@ -75,7 +75,7 @@ function getUserInput() {
     alert("Bitte Titel und Inhalt eingeben.");
     return;
   }
-  saveNote(title, text, Number(id));
+  saveNote(title, text, id);
 
   titleInputEl.value = "";
   contentInputEl.value = "";
